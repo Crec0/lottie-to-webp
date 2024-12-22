@@ -1,26 +1,19 @@
 <script lang="ts">
-    import { Button } from '$lib/components/ui/button';
-    import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '$lib/components/ui/card';
+    import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
     import { type LottiePlayer } from 'lottie-web';
     import { onMount } from 'svelte';
     import Dropzone from '$lib/components/custom/Dropzone.svelte';
-    import { convertLottie, type LottieBlob } from '$lib';
+    import { type LottieBlob } from '$lib';
     import UploadedBlob from '$lib/components/custom/UploadedBlob.svelte';
 
 
     let lottiePlayer: LottiePlayer | null = $state(null);
-    let canvasRef: HTMLCanvasElement | null = $state(null);
 
     let fileBuffer: LottieBlob[] = $state([]);
 
     onMount(async () => {
         lottiePlayer = ( await import('lottie-web') ).default;
     });
-
-    // $effect(() => {
-    //     if ( lottiePlayer == null || canvasRef == null || fileBuffer.length === 0 ) return;
-    //
-    // });
 </script>
 
 <Card class="w-1/2">

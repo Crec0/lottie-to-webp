@@ -16,6 +16,9 @@ function createBaseElements(width: number, height: number) {
     const div = document.createElement('div');
     div.style.width = `${ width }px`;
     div.style.height = `${ height }px`;
+    div.style.position = 'absolute';
+    div.style.top = '-9999px';
+    div.style.left = '-9999px';
     div.style.visibility = 'hidden';
 
     div.appendChild(canvas);
