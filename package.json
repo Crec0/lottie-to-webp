@@ -27,7 +27,8 @@
         "build": "vite build",
         "preview": "vite preview",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-        "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+        "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+        "copy-to-server": "scp -r ./build zero@192.168.1.200:~/docker/lottie-to-webp/data/build"
     },
     "type": "module"
 }

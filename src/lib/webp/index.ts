@@ -7,6 +7,7 @@ import type {
 } from './types';
 // @ts-ignore
 import Module from './webp-wasm';
+import { yieldToMain } from '$lib';
 
 // default webp config
 const defaultWebpConfig: WebPConfig = {
@@ -58,13 +59,16 @@ export const encode = async (
     return module.encode(data, width, height, hasAlpha, webpConfig);
 };
 
+
 export const encodeAnimation = async (
     width: number,
     height: number,
     hasAlpha: boolean,
     frames: WebPAnimationFrame[],
 ): Promise<Nullable<Uint8Array>> => {
-    const module = await Module();
+    await yieldToMain();
+    const moduleCC = await Module();
+    await yieldToMain();
     const durations: number[] = [];
     const dataLength = frames.reduce((acc, frame) => {
         acc += frame.data.length;
@@ -77,7 +81,8 @@ export const encodeAnimation = async (
         offset += frame.data.length;
         durations.push(frame.duration);
     });
-    return module.encodeAnimation(width, height, hasAlpha, durations, data);
+    await yieldToMain();
+    return moduleCC.encodeAnimation(width, height, hasAlpha, durations, data);
 };
 
 export const decoderVersion = async (): Promise<string> => {

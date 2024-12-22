@@ -1,15 +1,49 @@
 <script lang="ts">
     import { UploadCloudIcon } from 'lucide-svelte';
     import { onMount } from 'svelte';
+    import type { LottieBlob } from '$lib';
 
-
-    type DragEventWithTarget = DragEvent & {
-        currentTarget: EventTarget & HTMLLabelElement;
-        dataTransfer: DataTransfer | null;
-    };
 
     let dragTarget: HTMLElement | null = $state(null);
     let wrapper: HTMLDivElement | null = $state(null);
+
+
+    interface Props {
+        fileBuffer: LottieBlob[];
+    }
+
+    const { fileBuffer = $bindable() }: Props = $props();
+
+    function handleFiles(files: FileList) {
+        fileBuffer.length = 0;
+
+        for ( let i = 0; i < files.length; i++ ) {
+            const file = files[i];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const result = e.target?.result;
+                if ( result instanceof ArrayBuffer ) {
+                    fileBuffer.push({ name: file.name, buf: result });
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+    }
+
+    function onUpload(event: Event & { currentTarget: HTMLInputElement }) {
+        const elem = event.currentTarget;
+        if ( elem.files == null ) return;
+
+        handleFiles(elem.files);
+        event.currentTarget.value = '';
+    }
+
+    function handleDrop(event: DragEvent) {
+        event.preventDefault();
+        const files = event.dataTransfer?.files;
+        if ( files == null ) return;
+        handleFiles(files);
+    }
 
     onMount(() => {
         window.addEventListener('dragenter', (ev) => {
@@ -20,50 +54,24 @@
 
         window.addEventListener('dragleave', (ev) => {
             if ( wrapper == null ) return;
-            console.log(ev.target, dragTarget, ev.target === dragTarget, ev.target === document);
             if ( dragTarget === ev.target || ev.target === document ) {
                 wrapper.removeAttribute('data-shown');
             }
         });
 
-        window.addEventListener('dragover', (ev) => {
-            ev.preventDefault();
-        });
+        window.addEventListener('dragover', (ev) => ev.preventDefault());
 
         window.addEventListener('drop', (ev) => {
             ev.preventDefault();
             if ( wrapper == null ) return;
             wrapper.removeAttribute('data-shown');
-            // dropHandler(ev);
+            handleDrop(ev);
         });
     });
-
-    function onUpload(event: Event & { currentTarget: HTMLInputElement }) {
-        const elem = event.currentTarget;
-        if ( elem.files == null ) return;
-
-        console.log('File(s) selected', elem.files);
-
-        for ( let i = 0; i < elem.files.length; i++ ) {
-            const file = elem.files[i];
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const result = e.target?.result;
-                if ( result instanceof ArrayBuffer ) {
-                    // fileBuffer.push(result);
-                }
-            };
-            reader.readAsArrayBuffer(file);
-        }
-
-
-        event.currentTarget.value = '';
-    }
-
 </script>
 
 <div bind:this={wrapper}
-     class="invisible fixed top-0 left-0 z-50 h-full w-full select-none text-center text-4xl opacity-0 backdrop-blur-xl leading-[100vh] text-foreground data-[shown]:visible data-[shown]:opacity-50">
+     class="fixed invisible top-0 left-0 z-50 h-full w-full select-none text-center text-4xl opacity-0 backdrop-blur-sm transition-opacity duration-100 bg-background/50 leading-[100vh] text-foreground data-[shown]:opacity-100 data-[shown]:visible">
     Drop files anywhere in this window ;D
 </div>
 
