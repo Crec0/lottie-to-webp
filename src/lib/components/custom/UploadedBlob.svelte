@@ -84,28 +84,31 @@
     };
 </script>
 
-<div class="flex items-center gap-2 rounded border px-3 py-2 border-muted">
+<div class="flex items-center gap-2 rounded border px-3 py-2 border-muted flex-row flex-wrap w-full">
     <span class="grow truncate">{name}</span>
 
-    <Input bind:value={width} class="w-16 yeet" disabled={status === Status.Converting} minvalue="20"
-           onchange={handleWidthChange}
-           type="number"/>
+    <div class="flex flex-wrap flex-row gap-2">
+        <Input bind:value={width} class="w-16 yeet" disabled={status === Status.Converting} minvalue="20"
+               onchange={handleWidthChange}
+               type="number"/>
 
-    <Link2 class={cn("cursor-pointer rounded p-2 hover:bg-muted", linked ? "bg-muted" : "")} onclick={handleLinkClick}
-           size={36}/>
+        <Link2 class={cn("cursor-pointer rounded p-2 hover:bg-muted", linked ? "bg-muted" : "")} onclick={handleLinkClick}
+               size={36}/>
 
-    <Input bind:value={height} class="w-16" disabled={linked || status === Status.Converting} minvalue="20"
-           type="number"/>
+        <Input bind:value={height} class="w-16" disabled={linked || status === Status.Converting} minvalue="20"
+               type="number"/>
 
-    <Button class="min-w-28" disabled={status === Status.Converting} onclick={handleConvertClick} variant="default">
-        {#if status === Status.Idle}
-            Convert
-        {:else if status === Status.Converting}
-            <LoaderCircle size={24} class="animate-spin"/>
-        {:else if status === Status.Done}
-            Download
-        {:else}
-            Error
-        {/if}
-    </Button>
+        <Button class="min-w-28" disabled={status === Status.Converting} onclick={handleConvertClick} variant="default">
+            {#if status === Status.Idle}
+                Convert
+            {:else if status === Status.Converting}
+                <LoaderCircle size={24} class="animate-spin"/>
+            {:else if status === Status.Done}
+                Download
+            {:else}
+                Error
+            {/if}
+        </Button>
+    </div>
+
 </div>

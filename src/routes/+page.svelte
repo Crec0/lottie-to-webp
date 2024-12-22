@@ -16,16 +16,16 @@
     });
 </script>
 
-<Card class="w-1/2">
-    <CardHeader>
+<Card class="w-full md:w-3/4 lg:w-1/2 border-none">
+    <CardHeader class="px-2 ">
         <CardTitle>
             Upload Lottie Files
         </CardTitle>
     </CardHeader>
-    <CardContent class="space-y-2">
+    <CardContent class="p-2 lg:p-4 space-y-2">
         <Dropzone bind:fileBuffer />
 
-        <div class="flex h-96 select-none flex-col gap-2 border p-2">
+        <div class="flex h-96 select-none flex-col gap-2 border p-2 rounded">
             {#if fileBuffer.length > 0}
                 {#each fileBuffer as {name, buf} (name)}
                     <UploadedBlob {lottiePlayer} {name} {buf} />

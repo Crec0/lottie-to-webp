@@ -71,16 +71,17 @@
 </script>
 
 <div bind:this={wrapper}
-     class="fixed invisible top-0 left-0 z-50 h-full w-full select-none text-center text-4xl opacity-0 backdrop-blur-sm transition-opacity duration-100 bg-background/50 leading-[100vh] text-foreground data-[shown]:opacity-100 data-[shown]:visible">
+     class="fixed invisible top-0 left-0 z-50 h-full w-full select-none text-center text-xl md:text-4xl opacity-0 backdrop-blur-sm transition-opacity duration-100 bg-background/50 leading-[100vh] text-foreground data-[shown]:opacity-100 data-[shown]:visible">
     Drop files anywhere in this window ;D
 </div>
 
 <label
-    class='flex h-16 w-full cursor-pointer items-center justify-center rounded border-2 border-dashed text-xl transition-colors border-accent hover:bg-accent hover:text-accent-foreground hover:border-primary/50'
+    class='flex flex-col gap-1 p-2 lg:flex-row lg:h-16 w-full cursor-pointer items-center justify-center rounded border-2 border-dashed transition-colors border-accent hover:bg-accent hover:text-accent-foreground hover:border-primary/50'
     for="lottie-input"
 >
     <UploadCloudIcon class='h-8 w-8 text-muted-foreground'/>
-    <span class='pl-2 text-base text-muted-foreground'>Drag and drop or Click me to browse</span>
+    <span class='text-base text-muted-foreground'>Drag and drop or Click me to browse</span>
+    <span class='text-xs text-muted-foreground'>(Accepts .json or .lottie)</span>
 </label>
 <input
     accept=".json,.lottie"
