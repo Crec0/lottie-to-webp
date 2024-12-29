@@ -30,12 +30,15 @@ jobs:
             -   name: Build
                 run: deno task build
 
-            -   name: Deploy
-                uses: crazy-max/ghaction-github-pages@v4
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Add CNAME
+                run: echo 'lottie-to-webp.crec.dev' > ./build/CNAME
+
+            -   name: Deploy pages
+                uses: actions/deploy-pages@v4
+                id: deploy
                 with:
-                    target_branch: gh-pages
-                    build_dir: ./build
-                    jekyll: false
-                    fqdn: lottie-to-webp.crec.dev
-                env:
-                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    name: gh-pages
+                    path: ./build
