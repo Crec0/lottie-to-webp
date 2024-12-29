@@ -1,4 +1,4 @@
-name: docs
+name: pages
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
