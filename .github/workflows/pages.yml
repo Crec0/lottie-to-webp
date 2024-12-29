@@ -38,7 +38,7 @@ jobs:
             -   name: Add commit sha
                 run: |
                     git_hash=$(git rev-parse --short "$GITHUB_SHA")
-                    echo "{"sha": '$git_hash'}" > ./src/lib/sha.json
+                    echo "{\"sha\": \"$git_hash\"}" > ./src/lib/sha.json
 
             -   name: Build
                 run: deno task build
