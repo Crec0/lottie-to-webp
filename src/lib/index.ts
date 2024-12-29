@@ -55,6 +55,8 @@ export async function convertLottie(lottie: LottiePlayer, buf: ArrayBuffer, widt
     const ctx = canvas.getContext('2d');
     if ( ctx == null ) throw new Error('Failed to get 2D context');
 
+    await yieldToMain();
+
     const animation: AnimationItem & { container: HTMLCanvasElement } = lottie.loadAnimation({
         container: div,
         renderer: 'canvas',
@@ -66,6 +68,8 @@ export async function convertLottie(lottie: LottiePlayer, buf: ArrayBuffer, widt
             clearCanvas: true,
         },
     }) as AnimationItem & { container: HTMLCanvasElement };
+
+    await yieldToMain();
 
     const lottieCanvas = animation.container;
     const lottieCtx = lottieCanvas.getContext('2d', { willReadFrequently: true });
@@ -87,6 +91,8 @@ export async function convertLottie(lottie: LottiePlayer, buf: ArrayBuffer, widt
     if ( webpBlob == null ) {
         throw new Error('Failed to encode WebP image');
     }
+
+    await yieldToMain();
 
     return new Blob([ webpBlob ], { type: 'image/webp' });
 }

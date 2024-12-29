@@ -55,6 +55,9 @@
         convertLottie(lottiePlayer, buf, width, height)
             .then(async (blob) => {
                 status = Status.Done;
+
+                await yieldToMain();
+
                 const a = document.createElement('a');
                 a.href = URL.createObjectURL(blob);
                 a.download = `${ name }.webp`;
@@ -69,18 +72,21 @@
             });
     };
 
-    const handleConvertClick = () => {
+    const handleConvertClick = async () => {
         if ( status === Status.Converting ) return;
 
         if ( status === Status.Done ) {
+            await yieldToMain();
             linkNodeRef?.click();
             return;
         }
 
+        await yieldToMain();
+
         URL.revokeObjectURL(blobUrl);
         status = Status.Converting;
 
-        convert();
+        await convert();
     };
 </script>
 
