@@ -20,7 +20,7 @@
                 </svg>
             </a>
             <a class="text-sm text-muted-foreground"
-               href="https://github.com/Crec0/lottie-to-webp{sha ? `/commit/${sha}` : ''}"
+               href="https://github.com/Crec0/lottie-to-webp{sha ? `/tree/${sha}` : ''}"
                target="_blank">
                 @{sha ? sha : 'main'}
             </a>
