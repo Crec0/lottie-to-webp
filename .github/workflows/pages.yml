@@ -36,6 +36,6 @@ jobs:
                     target_branch: gh-pages
                     build_dir: ./build
                     jekyll: false
-                    fqdn: https://lottie-to-webp.crec.dev
+                    fqdn: lottie-to-webp.crec.dev
                 env:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
