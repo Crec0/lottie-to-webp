@@ -46,3 +46,5 @@ jobs:
             -   name: Deploy pages
                 uses: actions/deploy-pages@v4
                 id: deploy
+                with:
+                    token: ${{ secrets.GITHUB_TOKEN }}
