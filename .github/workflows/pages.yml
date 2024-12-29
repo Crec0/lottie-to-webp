@@ -37,7 +37,7 @@ jobs:
                 id: deploy
                 uses: actions/upload-pages-artifact@v3
                 with:
-                    path: dest/
+                    path: ./build
 
     deploy:
         runs-on: ubuntu-latest
