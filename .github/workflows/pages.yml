@@ -46,5 +46,3 @@ jobs:
             -   name: Deploy pages
                 uses: actions/deploy-pages@v4
                 id: deploy
-                with:
-                    name: gh-pages
